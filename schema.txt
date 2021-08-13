@@ -15,6 +15,7 @@ item : {
     description : string,
     imageId : [{_id : ObjectId}],
     featureId : [{_id : ObjectId}],
+    activityId : [{_id : ObjectId}],
 }
 
 feature : {
@@ -43,6 +44,8 @@ booking : {
     proofPayment : string,
     bankFrom : string,
     accountHolder : string
+    imageUrl : string,
+    status : string
 }
 
 member : {
