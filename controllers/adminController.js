@@ -1,4 +1,5 @@
 const Category = require('../models/Category');
+const Bank = require('../models/Bank');
 
 
 module.exports = {
@@ -63,9 +64,35 @@ module.exports = {
         }
     },
 
-    viewBank: (req, res) => {
-        res.render('admin/bank/view_bank', { title: "Staycation | Bank" })
+    viewBank: async (req, res) => {
+        try {
+            const bank = await Bank.find();
+            const alertMessage = req.flash('alertMessage');
+            const alertStatus = req.flash('alertStatus');
+            const alert = { message: alertMessage, status: alertStatus }
+            res.render('admin/bank/view_bank', { bank, alert, title: "Staycation | Bank" })
+        } catch (error) {
+            req.flash('alertMessage', `${error.message}`)
+            req.flash('alertStatus', 'danger')
+            console.log(error)
+            res.redirect('/admin/category')
+        }
     },
+    addBank: async (req, res) => {
+        try {
+            const { name, nameBank, nomorRekening } = req.body
+            await Bank.create({ name, nameBank, nomorRekening, imageUrl: `images/${req.file.filename}` })
+            req.flash('alertMessage', 'Success add bank')
+            req.flash('alertStatus', 'success')
+            res.redirect('/admin/bank')
+        } catch (error) {
+            console.log(error)
+            req.flash('alertMessage', `Failed add bank: ${error.message}`)
+            req.flash('alertStatus', 'danger')
+            res.redirect('/admin/bank')
+        }
+    },
+
     viewItem: (req, res) => {
         res.render('admin/item/view_item', { title: "Staycation | Item" })
     },
