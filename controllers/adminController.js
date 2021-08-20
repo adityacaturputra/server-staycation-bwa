@@ -121,6 +121,22 @@ module.exports = {
             res.redirect('/admin/bank')
         }
     },
+    deleteBank: async (req, res) => {
+        try {
+            const { id } = req.params
+            const bank = await Bank.findOne({ _id: id })
+            await fs.unlink(path.join(`public/${bank.imageUrl}`))
+            await bank.remove()
+            req.flash('alertMessage', 'Success delete bank')
+            req.flash('alertStatus', 'success')
+            res.redirect('/admin/bank')
+        } catch (error) {
+            req.flash('alertMessage', `Failed delete bank: ${error.message}`)
+            req.flash('alertStatus', 'danger')
+            console.log(error)
+            res.redirect('/admin/bank')
+        }
+    },
 
 
     viewItem: (req, res) => {
