@@ -39,7 +39,8 @@
                             <td>
                                 <a href="javascript:void()" type="button"
                                     class="btn btn-warning btn-circle btn-sm button-update" data-id="<%= bank[i].id %>"
-                                    data-name="<%= bank[i].name %> "><i class="fas fa-edit"></i></a>
+                                    data-name="<%= bank[i].name %>" data-namebank="<%= bank[i].nameBank %>"
+                                    data-nomorrekening="<%= bank[i].nomorRekening %>"><i class="fas fa-edit"></i></a>
                                 <form action="/admin/bank/<%= bank[i].id %>?_method=DELETE" method="POST"
                                     style="display: inline;">
                                     <button type="submit" href="" class="btn btn-danger btn-circle btn-sm"><i
