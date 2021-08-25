@@ -195,11 +195,29 @@ module.exports = {
             const {id} = req.params
             const item = await Item.findOne({_id: id})
                 .populate({ path: 'imageId', select: 'id imageUrl' })
-            console.log(item.imageId)
             const alertMessage = req.flash('alertMessage');
             const alertStatus = req.flash('alertStatus');
             const alert = { message: alertMessage, status: alertStatus }
             res.render('admin/item/view_item', { title: "Staycation | Show Image Item", item, alert, action: 'show image' })
+        } catch (error) {
+            req.flash('alertMessage', `Failed view: ${error.message}`)
+            req.flash('alertStatus', 'danger')
+            console.log(error)
+            res.redirect('/admin/item')
+        }
+    },
+    showEditItem: async (req, res) => {
+        try {
+            const {id} = req.params
+            const item = await Item.findOne({_id: id})
+                .populate({ path: 'imageId', select: 'id imageUrl' })
+                .populate({ path: 'categoryId', select: 'id name' })
+            console.log(item)
+            const category = await Category.find()
+            const alertMessage = req.flash('alertMessage');
+            const alertStatus = req.flash('alertStatus');
+            const alert = { message: alertMessage, status: alertStatus }
+            res.render('admin/item/view_item', { title: "Staycation | Edit Item", item, category, alert, action: 'edit' })
         } catch (error) {
             req.flash('alertMessage', `Failed view: ${error.message}`)
             req.flash('alertStatus', 'danger')
