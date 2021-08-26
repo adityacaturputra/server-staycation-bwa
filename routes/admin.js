@@ -26,6 +26,7 @@ router.delete('/item/:id', adminController.deleteItem)
 
 // Detail Item endpoint
 router.get('/item/show-detail-item/:itemId', adminController.viewDetailItem)
+router.post('/item/add/feature', upload, adminController.addFeature)
 
 router.get('/booking', adminController.viewBooking)
 
