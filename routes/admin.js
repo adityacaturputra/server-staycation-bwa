@@ -28,6 +28,7 @@ router.delete('/item/:id', adminController.deleteItem)
 router.get('/item/show-detail-item/:itemId', adminController.viewDetailItem)
 router.post('/item/add/feature', upload, adminController.addFeature)
 router.put('/item/update/feature', upload, adminController.editFeature)
+router.delete('/item/:itemId/feature/:id/', adminController.deleteFeature)
 
 router.get('/booking', adminController.viewBooking)
 

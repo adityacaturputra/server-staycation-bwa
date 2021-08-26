@@ -54,7 +54,7 @@
                                         <a href="javascript:void()" type="button"
                                             class="btn btn-warning btn-circle btn-sm button-update" data-id="<%= feature[i].id %>"
                                             data-name="<%= feature[i].name %>" data-qty="<%= feature[i].qty %>"><i class="fas fa-edit"></i></a>
-                                        <form action="/admin/feature/<%= feature[i].id %>?_method=DELETE" method="POST"
+                                        <form action="/admin/item/<%= itemId %>/feature/<%= feature[i].id %>?_method=DELETE" method="POST"
                                             style="display: inline;">
                                             <button type="submit" href="" class="btn btn-danger btn-circle btn-sm"><i
                                                     class="fas fa-trash"></i></button>
