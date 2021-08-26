@@ -24,6 +24,8 @@ router.get('/item/:id', adminController.showEditItem)
 router.put('/item/:id', uploadMultiple, adminController.editItem)
 router.delete('/item/:id', adminController.deleteItem)
 
+// Detail Item endpoint
+router.get('/item/show-detail-item/:itemId', adminController.viewDetailItem)
 
 router.get('/booking', adminController.viewBooking)
 
