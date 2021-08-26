@@ -397,6 +397,31 @@ module.exports = {
             res.redirect(`/admin/item/show-detail-item/${itemId}`)
         }
     },
+    editActivity : async (req, res) => {
+        try {
+            const { id, name, type, itemId } = req.body
+            const activity = await Activity.findOne({ _id: id })
+            if (!req.file) {
+                activity.name = name
+                activity.type = type
+                await activity.save();
+            } else {
+                await fs.unlink(path.join(`public/${activity.imageUrl}`))
+                activity.name = name
+                activity.type = type
+                activity.imageUrl = `images/${req.file.filename}`
+                await activity.save();
+            }
+            req.flash('alertMessage', 'Success update activity')
+            req.flash('alertStatus', 'success')
+            res.redirect(`/admin/item/show-detail-item/${itemId}`)
+        } catch (error) {
+            req.flash('alertMessage', `Failed update activity: ${error.message}`)
+            req.flash('alertStatus', 'danger')
+            console.log(error)
+            res.redirect(`/admin/item/show-detail-item/${itemId}`)
+        }
+    },
 
     viewBooking: (req, res) => {
         res.render('admin/booking/view_booking', { title: "Staycation | Booking" })

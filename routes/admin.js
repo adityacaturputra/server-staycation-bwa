@@ -32,6 +32,7 @@ router.delete('/item/:itemId/feature/:id/', adminController.deleteFeature)
 
 // Detail Item Activity endpoint
 router.post('/item/add/activity', upload, adminController.addActivity)
+router.put('/item/update/activity', upload, adminController.editActivity)
 
 router.get('/booking', adminController.viewBooking)
 
