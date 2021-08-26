@@ -35,6 +35,28 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <% for( let i = 0; i < activity.length; i++ ) { %>
+                                    <tr>
+                                        <td><%= i + 1 %> </td>
+                                        <td><%= activity[i].name %> </td>
+                                        <td><%= activity[i].type %> </td>
+                                        <td><img src="http://localhost:3000/<%= activity[i].imageUrl %>" alt="<%= activity[i].name%>"
+                                            width="70px">
+                                        </td>
+                                        <td>
+                                            <a href="javascript:void()" type="button"
+                                                class="btn btn-warning btn-circle btn-sm button-update" data-id="<%= activity[i].id %>"
+                                                data-name="<%= activity[i].name %>" data-type="<%= activity[i].type %>"><i class="fas fa-edit"></i></a>
+                                            <form action="/admin/item/<%= itemId %>/activity/<%= activity[i].id %>?_method=DELETE" method="POST"
+                                                style="display: inline;">
+                                                <button type="submit" href="" class="btn btn-danger btn-circle btn-sm"><i
+                                                        class="fas fa-trash"></i></button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <% } %>
+                            </tbody>
                         </table>
                     </div>
                 </div>

@@ -297,7 +297,8 @@ module.exports = {
             const alertStatus = req.flash('alertStatus');
             const alert = { message: alertMessage, status: alertStatus }
             const feature = await Feature.find({itemId})
-            res.render('admin/item/detail_item/view_detail_item', { title: 'Staycation | Detail Item', alert, itemId, feature })
+            const activity = await Activity.find({itemId})
+            res.render('admin/item/detail_item/view_detail_item', { title: 'Staycation | Detail Item', alert, itemId, feature, activity })
         } catch (error) {
             req.flash('alertStatus', 'danger')
             console.log(error)
