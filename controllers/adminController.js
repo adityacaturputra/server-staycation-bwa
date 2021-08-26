@@ -4,13 +4,50 @@ const Item = require('../models/Item');
 const Image = require('../models/Image');
 const Feature = require('../models/Feature');
 const Activity = require('../models/Activity');
+const Users = require('../models/Users');
 const mongoose = require('mongoose');
 const fs = require('fs-extra');
-const path = require('path')
-const ObjectId = mongoose.Types.ObjectId
+const path = require('path');
+const bcrypt = require('bcryptjs');
+const ObjectId = mongoose.Types.ObjectId;
 
 
 module.exports = {
+    viewSignin: async (req, res) => {
+        try {
+            const alertMessage = req.flash('alertMessage');
+            const alertStatus = req.flash('alertStatus');
+            const alert = { message: alertMessage, status: alertStatus }
+            res.render('index', {alert, title: "Staycation | Login" })
+        } catch (error) {
+            console.log(error)
+            res.redirect('/admin/signin')
+        }
+    },
+    actionSignin: async (req, res) => {
+        try {
+            const {username, password} = req.body
+            const user = await Users.findOne({username})
+            if(!user) {
+                req.flash('alertMessage', 'username doesnt exist')
+                req.flash('alertStatus', 'danger')
+                res.redirect('/admin/signin')
+                return
+            }
+            const isPasswordMatch = await bcrypt.compare(password, user.password)
+            if (!isPasswordMatch) {
+                req.flash('alertMessage', 'wrong password')
+                req.flash('alertStatus', 'danger')
+                res.redirect('/admin/signin')
+                return
+            }
+            res.redirect('/admin/dashboard')
+        } catch (error) {
+            req.flash(`alertMessage', 'something goes wrong: ${error.message}`)
+            req.flash('alertStatus', 'danger')
+            res.redirect('/admin/signin')
+        }
+    },
     viewDashboard: (req, res) => {
         res.render('admin/dashboard/view_dashboard', { title: "Staycation | Dashboard" })
     },
