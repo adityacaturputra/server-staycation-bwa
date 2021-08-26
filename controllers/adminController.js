@@ -325,6 +325,31 @@ module.exports = {
             res.redirect(`/admin/item/show-detail-item/${itemId}`)
         }
     },
+    editFeature : async (req, res) => {
+        try {
+            const { id, name, qty, itemId } = req.body
+            const feature = await Feature.findOne({ _id: id })
+            if (!req.file) {
+                feature.name = name
+                feature.qty = qty
+                await feature.save();
+            } else {
+                await fs.unlink(path.join(`public/${feature.imageUrl}`))
+                feature.name = name
+                feature.qty = qty
+                feature.imageUrl = `images/${req.file.filename}`
+                await feature.save();
+            }
+            req.flash('alertMessage', 'Success update feature')
+            req.flash('alertStatus', 'success')
+            res.redirect(`/admin/item/show-detail-item/${itemId}`)
+        } catch (error) {
+            req.flash('alertMessage', `Failed update feature: ${error.message}`)
+            req.flash('alertStatus', 'danger')
+            console.log(error)
+            res.redirect(`/admin/item/show-detail-item/${itemId}`)
+        }
+    },
 
     viewBooking: (req, res) => {
         res.render('admin/booking/view_booking', { title: "Staycation | Booking" })
