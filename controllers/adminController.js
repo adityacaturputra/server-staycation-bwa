@@ -520,10 +520,43 @@ module.exports = {
             const booking = await Booking.findOne({_id: id})
                 .populate('memberId')
                 .populate('bankId')
-            console.log(booking)
-                res.render('admin/booking/show_detail_booking', { title: "Staycation | Detail Booking", booking, user: req.session.user })
+            const alertMessage = req.flash('alertMessage');
+            const alertStatus = req.flash('alertStatus');
+            const alert = { message: alertMessage, status: alertStatus }
+            res.render('admin/booking/show_detail_booking', { title: "Staycation | Detail Booking", alert, booking, user: req.session.user })
         } catch (error) {
-            
+            res.redirect('/admin/booking')
+        }
+    },
+    actionConfirm: async (req, res) => {
+        const {id} = req.params
+        try {
+            const booking = await Booking.findOne({_id: id})
+            booking.payments.status = "Accept"
+            await booking.save()
+            req.flash('alertMessage', `success confirm`)
+            req.flash('alertStatus', 'success')
+            res.redirect(`/admin/booking/${id}`)
+        } catch (error) {
+            req.flash('alertMessage', `Failed confirm: ${error.message}`)
+            req.flash('alertStatus', 'danger')
+            res.redirect(`/admin/booking/${id}`)
+        }
+    },
+    actionReject: async (req, res) => {
+        const {id} = req.params
+        try {
+            const booking = await Booking.findOne({_id: id})
+            booking.payments.status = "Reject"
+            await booking.save()
+            req.flash('alertMessage', `success reject`)
+            req.flash('alertStatus', 'success')
+            res.redirect(`/admin/booking/${id}`)
+        } catch (error) {
+            req.flash('alertMessage', `Failed reject: ${error.message}`)
+            req.flash('alertStatus', 'danger')
+            res.redirect(`/admin/booking/${id}`)
         }
     }
+
 }

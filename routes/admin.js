@@ -43,6 +43,8 @@ router.delete('/item/:itemId/activity/:id/', adminController.deleteActivity)
 // Detail Booking endpoint
 router.get('/booking', adminController.viewBooking)
 router.get('/booking/:id', adminController.showDetailBooking)
+router.put('/booking/:id/confirm', adminController.actionConfirm)
+router.put('/booking/:id/reject', adminController.actionReject)
 
 
 
