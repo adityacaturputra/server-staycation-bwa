@@ -507,7 +507,7 @@ module.exports = {
         try {
             const booking = await Booking.find()
                 .populate('memberId')
-                .populate('bankId')
+                // .populate('bankId')
             res.render('admin/booking/view_booking', { title: "Staycation | Booking", booking, user: req.session.user })
         } catch (error) {
             req.flash('alertMessage', `Failed view: ${error.message}`)
@@ -521,7 +521,7 @@ module.exports = {
         try {
             const booking = await Booking.findOne({_id: id})
                 .populate('memberId')
-                .populate('bankId')
+                // .populate('bankId')
             const alertMessage = req.flash('alertMessage');
             const alertStatus = req.flash('alertStatus');
             const alert = { message: alertMessage, status: alertStatus }
