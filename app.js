@@ -20,6 +20,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 // admin routes
 var adminRouter = require('./routes/admin');
+var apiRouter = require('./routes/api');
 
 var app = express();
 
@@ -52,6 +53,9 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 // admin routes
 app.use('/admin', adminRouter);
+// api routes
+app.use('/api/v1/member', apiRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
