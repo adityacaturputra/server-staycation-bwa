@@ -25,8 +25,8 @@ module.exports = {
                 })
 
             const city = await Item.estimatedDocumentCount()
-            const traveler = await Traveler.estimatedDocumentCount()
-            const treasure = await Treasure.estimatedDocumentCount()
+            const travelers = await Traveler.estimatedDocumentCount()
+            const treasures = await Treasure.estimatedDocumentCount()
     
             
             // Logic for isPopular field handler --start
@@ -55,8 +55,8 @@ module.exports = {
 
             res.status(200).json({
                 hero: {
-                    traveler,
-                    treasure,
+                    travelers,
+                    treasures,
                     cities: city
                 },
                 mostPicked,
